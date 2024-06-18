@@ -3,7 +3,7 @@
     "description": "This is a laravel installer for byte-intelligent products.",
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": "^7.0.0|^8.0.0"
     },
