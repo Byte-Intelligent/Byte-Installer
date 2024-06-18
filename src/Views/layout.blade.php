@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="{{asset("vendor/assets/images/favicon.png")}}" type="image/x-icon"/>
     <!-- css file  -->
     <link rel="stylesheet" href="{{asset("vendor/assets/css/bootstrap.min.css")}}"/>
-    <link rel="stylesheet" href="{{asset("vendor/assets/scss/style.css")}}"/>
+    <link rel="stylesheet" href="{{asset("vendor/assets/css/style.css")}}"/>
 </head>
 
 <body>
