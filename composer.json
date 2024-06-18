@@ -1,0 +1,29 @@
+{
+    "name": "byteintelligent/bi-installer",
+    "description": "This is a laravel installer for byte-intelligent products.",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.0.0|^8.0.0"
+    },
+    "authors": [
+        {
+            "name": "Md Imran Hossain",
+            "email": "mdimran24hrs@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Byteintelligent\\BiInstaller\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Byteintelligent\\BiInstaller\\Providers\\BiInstallerServiceProvider"
+            ]
+        }
+    }
+
+}
