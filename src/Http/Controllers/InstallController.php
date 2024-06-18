@@ -155,13 +155,13 @@ class InstallController extends Controller
     public function processStore(Request $request)
     {
         $request->validate([
-            'db_host' => 'nullable|date',
-            'db_user' => 'nullable|date',
-            'db_name' => 'nullable|date',
-            'db_password' => 'nullable|date',
+            'db_host' => 'required',
+            'db_user' => 'required',
+            'db_name' => 'required',
         ]);
 
         if (!$this->checkDatabaseConnection($request)) {
+            dd(11);
             $this->logger->log('End with', 'Database credential is not correct!');
             $this->logger->log('', '==============END=============');
             return Redirect::back()->withErrors('Database credential is not correct!');
@@ -215,6 +215,7 @@ class InstallController extends Controller
 
     public function database()
     {
+        set_time_limit(0);
         $this->logger->log('STEP-2', 'Start from database method');
         $this->logger->log('Migration & seed', 'Start');
         $response = $this->databaseManager->migrateAndSeed();
@@ -222,20 +223,30 @@ class InstallController extends Controller
         $this->logger->log('Migration & seed response ', $response);
         if ($response['status'] == 'success') {
             try {
-                $this->logger->log('LQS file', 'Local sql get content start');
-                $lqs = file_get_contents(config('app.sql_path'));
-                $this->logger->log('LQS file', 'Local sql get content END');
-
-                $this->logger->log('SQL import', 'START');
-                DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-                if ($lqs != null && $lqs != "") {
-                    DB::unprepared($lqs);
-                }
-                DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-                $this->logger->log('SQL import', 'END');
+//                $this->logger->log('LQS file', 'Local sql get content start');
+//                $lqs = file_get_contents(config('app.sql_path'));
+//                $this->logger->log('LQS file', 'Local sql get content END');
+//
+//                $this->logger->log('SQL import', 'START');
+//                DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+//                if ($lqs != null && $lqs != "") {
+//                    DB::unprepared($lqs);
+//                }
+//                DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+//                $this->logger->log('SQL import', 'END');
 
                 $this->logger->log('Installed file', 'Write Start');
                 $installedLogFile = storage_path('bis');
+
+                $data = json_encode([
+                    'd' => base64_encode($this->get_domain_name(request()->fullUrl())),
+                    'i' => date('ymdhis'),
+                    'u' => date('ymdhis'),
+                ]);
+
+                if (!file_exists($installedLogFile)) {
+                    file_put_contents($installedLogFile, $data);
+                }
 
                 $this->logger->log('Installed file', 'Write END');
 
